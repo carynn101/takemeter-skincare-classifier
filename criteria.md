@@ -19,9 +19,8 @@ These targets were set before training, before I saw any results.
 **Why:** My actual counts are 99 `skin_help` (50%), 79 `discussion` (40%), and 20 `routine_review` (10%). The brief caps any label at 70%, and I chose 60% to catch a drift before it reaches the cap. The 8% minimum is about 16 rows and protects my thinnest label from becoming too small to measure.
 
 ## 5. Labeling consistency
-**Criterion:** When a second person labels the same 20 cold-set posts using only `notes/label_taxonomy.md`, they agree with my labels on at least 13 of 20 (65%).
-**Why:** I hesitated on 5 of my 20 cold rows (25%), mostly where a post mixes a personal concern with a general question. If about a third of posts are borderline for me, I expect disagreement on some of them even with my tie-break rules, so 65% is realistic and still above guessing.
-
+**Criterion:** When a second person labels the 20 rows marked `cold` in the `note` column of `labels.csv` using only `notes/label_taxonomy.md`, they agree with my labels on at least 13 of 20 (65%).
+**Why:** I hesitated on 6 of those 20 rows (30%), mostly where a post mixes a personal concern with a general question. Because roughly a third of posts are borderline even for me, I expect some disagreement despite my tie-break rules, so 65% is realistic and still well above chance for my 50/40/10 label split.
 ---
 
 ## Pick numbers you can defend
