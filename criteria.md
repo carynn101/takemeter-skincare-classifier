@@ -1,22 +1,26 @@
-# Acceptance criteria — TakeMeter
+# Acceptance Criteria
 
-Five criteria that say what "working" means for this classifier, written in
-unit 5 **before** anything was trained.
+These targets were set before training, before I saw any results.
 
-**All five are yours this time.** None are given. You've had two projects of
-practice.
+## 1. Overall accuracy
+**Criterion:** Accuracy on `test_split.csv` is at least 0.65.
+**Why:** My test split is about 30 rows, and always predicting `skin_help` (50% of my data) would score about 0.50. A target of 0.65 means roughly 20 of 30 correct, 5 more than the always-guess baseline, which is the least I would call useful.
 
-An acceptance criterion names a number. *"The model is accurate"* is an
-opinion. *"Every label has an F1 of at least 0.60 on the held-out set"* is a
-criterion.
+## 2. Per-label F1 for the two larger labels
+**Criterion:** F1 for `skin_help` and for `discussion`, each measured on `test_split.csv`, is at least 0.60.
+**Why:** These labels have about 12-15 test rows each, so one or two mistakes move F1 noticeably. I chose 0.60 because my titles-only text is short and I hesitated on 6 of my 20 cold labels, so I do not expect near-perfect scores.
 
-Under each, write a sentence or two on **why that number**. A reason that says
-something about your data or your taxonomy earns credit — *"I picked 0.60 F1
-for `reaction` because it's my smallest label and I only have about 50
-examples of it"*. A reason that could be attached to any project does not.
+## 3. Per-label F1 for the thin label
+**Criterion:** F1 for `routine_review` on `test_split.csv` is at least 0.50.
+**Why:** `routine_review` has only 20 labeled rows (10%), so the test split holds about 3 of them. With 3 rows, F1 moves in big steps, and 0.50 means catching at least 1 of 3 without false alarms. I set it lower than the other labels because the sample is tiny, not because I expect it to be unimportant.
 
-> Missing your own targets next unit costs you nothing. Setting a target so
-> easy you can't miss it does.
+## 4. Balance
+**Criterion:** In `labels.csv`, no label makes up more than 60% of rows, and every label makes up at least 8%.
+**Why:** My actual counts are 99 `skin_help` (50%), 79 `discussion` (40%), and 20 `routine_review` (10%). The brief caps any label at 70%, and I chose 60% to catch a drift before it reaches the cap. The 8% minimum is about 16 rows and protects my thinnest label from becoming too small to measure.
+
+## 5. Labeling consistency
+**Criterion:** When a second person labels the same 20 cold-set posts using only `notes/label_taxonomy.md`, they agree with my labels on at least 13 of 20 (65%).
+**Why:** I hesitated on 5 of my 20 cold rows (25%), mostly where a post mixes a personal concern with a general question. If about a third of posts are borderline for me, I expect disagreement on some of them even with my tie-break rules, so 65% is realistic and still above guessing.
 
 ---
 
