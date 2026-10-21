@@ -8,7 +8,7 @@ These targets were set before training, before I saw any results.
 
 ## 2. Per-label F1 for the two larger labels
 **Criterion:** F1 for `skin_help` and for `discussion`, each measured on `test_split.csv`, is at least 0.60.
-**Why:** These labels have about 12-15 test rows each, so one or two mistakes move F1 noticeably. I chose 0.60 because my titles-only text is short and I hesitated on 6 of my 20 cold labels, so I do not expect near-perfect scores.
+**Why:** These labels have about 12-15 test rows each, so one or two mistakes move F1 noticeably. I chose 0.60 because my titles-only text is short and I hesitated on 6 of my 20 cold labels (30%), so I do not expect near-perfect scores.
 
 ## 3. Per-label F1 for the thin label
 **Criterion:** F1 for `routine_review` on `test_split.csv` is at least 0.50.
@@ -51,66 +51,6 @@ whether you hit them:
 - **Unit 6 tests across three seeds, and the target has to hold across all
   three.** A target of 0.65 against results of 0.71, 0.62, 0.68 is a **miss**.
   Pick with that in mind — it is stricter than it first sounds.
-
----
-
-## 1.
-
-<!-- Your criterion. It must name a number. -->
-
-
-
-**Why this target:**
-
-
-
----
-
-## 2.
-
-<!-- Your criterion. -->
-
-
-
-**Why this target:**
-
-
-
----
-
-## 3.
-
-<!-- Your criterion. -->
-
-
-
-**Why this target:**
-
-
-
----
-
-## 4.
-
-<!-- Your criterion. -->
-
-
-
-**Why this target:**
-
-
-
----
-
-## 5.
-
-<!-- Your criterion. -->
-
-
-
-**Why this target:**
-
-
 
 ---
 
