@@ -1,24 +1,24 @@
 text,label,note
-Salicylic Acid Serum,,flair:Product Request
-"Best products (or treatments) for crepey skin on cheeks, neck, and around eyes",,flair:Product Request
-DEBUNKING MYTHS: Hydroquinone is safe.,,flair:PSA
-Face reddening and burning after skincare,,flair:Routine Help
-Basic skincare help,,flair:Acne
-Is this shininess a sign of over-exfoliation?,,flair:Routine Help
-What's the best alternative for retinoids?,,flair:product request
-Any firming skincare products that actually work?,,flair:Product request
-Genuinely good products that aren’t viral and gimmicky,,flair:Product Request
-concerning pimple cluster,,flair:Acne
-My dad (70M) is asking about skincare products to help remove some of these blemishes and improve his skin.,,flair:Routine Help
-How should i form my routine? Cystic acne and more,,flair:Routine Help
-"I truly believe that for the vast majority of people, you can make a good routine with relatively affordable products.",,flair:Personal
-a lip balm safe for acne prone skin,,flair:product request
-Extremely dehydrated acne prone skin,,flair:Product Request
-Sunscreen Reviews from my Spring/Summer 2026,,flair:Sun Care
-Amoxicillin cleared my acne,,flair:acne
-feeling helpless about my dark inner thighs,,flair:Routine help
-Heavenly product!😭,,flair:Review
-Can I use a spray bottle with my cleansing lotion rather than tap water,,flair:Misc
+Salicylic Acid Serum,discussion,flair:Product Request; pre-labeled
+"Best products (or treatments) for crepey skin on cheeks, neck, and around eyes",skin_help,flair:Product Request; pre-labeled
+DEBUNKING MYTHS: Hydroquinone is safe.,discussion,flair:PSA; pre-labeled
+Face reddening and burning after skincare,skin_help,flair:Routine Help; pre-labeled
+Basic skincare help,routine_review,flair:Acne; pre-labeled
+Is this shininess a sign of over-exfoliation?,skin_help,flair:Routine Help; pre-labeled
+What's the best alternative for retinoids?,discussion,flair:product request; pre-labeled
+Any firming skincare products that actually work?,discussion,flair:Product request; pre-labeled
+Genuinely good products that aren’t viral and gimmicky,discussion,flair:Product Request; pre-labeled
+concerning pimple cluster,skin_help,flair:Acne; pre-labeled
+My dad (70M) is asking about skincare products to help remove some of these blemishes and improve his skin.,skin_help,flair:Routine Help; pre-labeled
+How should i form my routine? Cystic acne and more,routine_review,flair:Routine Help; pre-labeled
+"I truly believe that for the vast majority of people, you can make a good routine with relatively affordable products.",discussion,flair:Personal; pre-labeled
+a lip balm safe for acne prone skin,skin_help,flair:product request; pre-labeled
+Extremely dehydrated acne prone skin,skin_help,flair:Product Request; pre-labeled
+Sunscreen Reviews from my Spring/Summer 2026,discussion,flair:Sun Care; pre-labeled
+Amoxicillin cleared my acne,skin_help,flair:acne; pre-labeled
+feeling helpless about my dark inner thighs,skin_help,flair:Routine help; pre-labeled
+Heavenly product!😭,discussion,flair:Review; pre-labeled
+Can I use a spray bottle with my cleansing lotion rather than tap water,discussion,flair:Misc; pre-labeled
 "Routine minimizes acne, but sebaceous filaments still present",,flair:Routine Help
 Has anyone tried the Medicube PDRN Pink Collagen Volume Multi Balm Stick? Is it worth it?,,flair:Product Question
 seeking advice for under-eye bags,,flair:Personal
@@ -177,23 +177,23 @@ Please help 🥺 I can’t figure out what this texture is on both my cheeks/chi
 Pore on nose keeps filling up with pus and resealing every 12 hours for months. Derm shrugged.,,flair:Acne
 "sebaceous filaments, redness nose, breakouts.",,flair:Routine Help
 Friend used ChatGPT…,,flair:Routine Help
-What is wrong with my nose?,,flair:Acne
-need help figuring how to treat dry patches on face,,flair:routine help
-Light lasers or retinal?,,flair:Routine Help
-my terrible blackheads that just won’t go away no matter what i try,,flair:Routine help
-Is exfoliation necessary?,,flair:Routine Help
-"I vaguely knew heavy sunscreen use could affect vitamin D, but I’d never seen an actual year-long trial on it",,flair:Research
-can’t seem to get rid of clogged pores,,flair:Acne
-Is there any truth to “drinking retinol” by consuming carrot juice or is it another social media fad?,,flair:PSA
-Something for blackheads please,,flair:Product Request
-"You can now only use one skincare product that's not cleanser, acne control, or SPF. What one product do you choose?",,flair:Misc
-Does anyone have eyes like mine?,,flair:Routine Help
-Has anyone tried this Sephora waterproof eye makeup remover?,,flair:Product Question
-Good sunscreen for sensitive skin?,,flair:Sun Care
-red and irritated :(,,flair:Routine Help
-This moisturiser burnt my skin,,flair:Research
-"Lost with what to do to combat skin redness/ inflammation - what am I even fighting? Seb derm, rosacea, damaged barrier?",,flair:Routine Help
-Wondering if this is a good / safe routine,,flair:Routine Help
-My face is dead,,flair:Routine Help
-I’ve been using adapalene for ~6 weeks and I’m suffering:(,,flair:Acne
-I’m 18 and I’m starting to see forehead wrinkles,,flair:Anti-Aging
+What is wrong with my nose?,discussion,flair:Acne; cold
+need help figuring how to treat dry patches on face,skin_help,flair:routine help; cold
+Light lasers or retinal?,discussion,flair:Routine Help; cold
+my terrible blackheads that just won’t go away no matter what i try,skin_help,flair:Routine help; cold
+Is exfoliation necessary?,routine_review,flair:Routine Help; cold
+"I vaguely knew heavy sunscreen use could affect vitamin D, but I’d never seen an actual year-long trial on it",discussion,flair:Research; cold
+can’t seem to get rid of clogged pores,skin_help,flair:Acne; cold
+Is there any truth to “drinking retinol” by consuming carrot juice or is it another social media fad?,discussion,flair:PSA; cold
+Something for blackheads please,routine_review,flair:Product Request; cold
+"You can now only use one skincare product that's not cleanser, acne control, or SPF. What one product do you choose?",discussion,flair:Misc; cold
+Does anyone have eyes like mine?,discussion,flair:Routine Help; cold
+Has anyone tried this Sephora waterproof eye makeup remover?,routine_review,flair:Product Question; cold
+Good sunscreen for sensitive skin?,skin_help,flair:Sun Care; cold
+red and irritated :(,skin_help,flair:Routine Help; cold
+This moisturiser burnt my skin,skin_help,flair:Research; cold
+"Lost with what to do to combat skin redness/ inflammation - what am I even fighting? Seb derm, rosacea, damaged barrier?",skin_help,flair:Routine Help; cold
+Wondering if this is a good / safe routine,routine_review,flair:Routine Help; cold
+My face is dead,discussion,flair:Routine Help; cold
+I’ve been using adapalene for ~6 weeks and I’m suffering:(,routine_review,flair:Acne; cold
+I’m 18 and I’m starting to see forehead wrinkles,skin_help,flair:Anti-Aging; cold
