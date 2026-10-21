@@ -21,6 +21,9 @@ These targets were set before training, before I saw any results.
 ## 5. Labeling consistency
 **Criterion:** When a second person labels the 20 rows marked `cold` in the `note` column of `labels.csv` using only `notes/label_taxonomy.md`, they agree with my labels on at least 13 of 20 (65%).
 **Why:** I hesitated on 6 of those 20 rows (30%), mostly where a post mixes a personal concern with a general question. Because roughly a third of posts are borderline even for me, I expect some disagreement despite my tie-break rules, so 65% is realistic and still well above chance for my 50/40/10 label split.
+
+**Note added after training:** The counts in criteria 3 and 4 were true when I wrote them. After I reviewed my pre-labeled rows I changed 3 labels, so the final counts in `labels.csv` are 100 `skin_help`, 76 `discussion`, and 22 `routine_review` (50.5% / 38.4% / 11.1%). I did not change any target or reason.
+
 ---
 
 ## Pick numbers you can defend
