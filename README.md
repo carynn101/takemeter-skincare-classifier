@@ -155,6 +155,9 @@ Raw collection files (copied page text and intermediate CSVs) are not committed.
      ═══════════════════════════════════════════════════════════════════ -->
 
 ---
+## Stretch Features Declared
+- **Confidence check:** I will report whether the model's confident predictions
+  are right more often than its unsure ones, with the numbers behind it.
 
 ## Baseline vs. Trained
 
@@ -175,37 +178,32 @@ I had already seen my unit 5 trained numbers (accuracy 0.500; `discussion` and `
 The baseline beat my trained model on all five measures, so fine-tuning on 138 titles added nothing over a zero-shot model reading my definitions. The gap is largest on `routine_review` (0.800 vs. 0.000), my thinnest label, where the trained model had only 16 training rows. Caveat: `routine_review` has just 3 test posts, so the baseline's 0.800 could move a lot on a different split, and this comparison covers seed 42 only.
 
 
-
 ---
 
 ## Run Log — Before
-
-<!-- Five criteria across three seeds. The notebook's section 6 prints the
-     spread table; the Target and Verdict columns are yours. -->
+**Device:** `mps` (Apple Silicon GPU). Settings: 3 epochs, learning rate 2e-5, batch size 16, `distilbert-base-uncased`.
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1. Overall accuracy | ≥ 0.65 | | | | |
-| 2. F1 `skin_help` / `discussion` | each ≥ 0.60 | _ / _ | _ / _ | _ / _ | |
-| 3. F1 `routine_review` | ≥ 0.50 | | | | |
-| 4. Balance (share per label) | ≤ 60% and ≥ 8% | 50.5 / 38.4 / 11.1% | same | same | MET |
-| 5. Labeling consistency | ≥ 13 of 20 | _ | n/a | n/a | |
+| 1. Overall accuracy | ≥ 0.65 | 0.500 | 0.500 | 0.700 | MISSED |
+| 2. F1 `skin_help` / `discussion` | each ≥ 0.60 | 0.667 / 0.000 | 0.667 / 0.000 | 0.788 / 0.667 | MISSED |
+| 3. F1 `routine_review` | ≥ 0.50 | 0.000 | 0.000 | 0.000 | MISSED |
+| 4. Balance in `labels.csv` | ≤ 60% and ≥ 8% | 50.5 / 38.4 / 11.1% | same | same | MET |
+| 5. Labeling consistency | ≥ 13 of 20 | pending | n/a | n/a | pending |
 
-### Confusion matrix
+Accuracy ranged from 0.500 to 0.700 across seeds, a 20-point spread, and discussion F1 ranged from 0.000 to 0.667. Because each test split holds only 30 rows, one or two posts move these scores a lot. This is too noisy for a stable measure.
 
-<!-- ⚠️ TYPED AS A MARKDOWN TABLE. The notebook prints one ready to paste.
-     An image of a matrix earns nothing. -->
 
-| true \ predicted | skin_help | discussion | routine_review |
+### Confusion matrix (seed 42, device: `mps`)
+
+| true \ predicted | skin_help | routine_review | discussion |
 |---|---|---|---|
-| **skin_help** | | | |
-| **discussion** | | | |
-| **routine_review** | | | |
+| **skin_help** | 15 | 0 | 0 |
+| **routine_review** | 3 | 0 | 0 |
+| **discussion** | 12 | 0 | 0 |
 
 **My biggest off-diagonal number, and what it means:**
-<!-- Not "the model made mistakes" — WHICH boundary it didn't learn, and which
-     direction. "7 real analysis posts were called hot_take and only 3 went the
-     other way" is a direction, not just an error rate. -->
+12 real `discussion` posts were called `skin_help`, and 0 went the other way. Every `routine_review` post (3 of 3) was also called `skin_help`. This is not a single confused boundary. The model predicted `skin_help` for all 30 posts and never produced another label, so it did not learn any boundary on this seed.
 
 
 
@@ -213,27 +211,24 @@ The baseline beat my trained model on all five measures, so fine-tuning on 138 t
 
 ## Verdicts and Diagnoses
 
-<!-- MET or MISSED against LAST UNIT's target. The target has to hold across
-     all three seeds, not turn up sometimes. -->
-
 | # | Criterion | Target | Verdict | How I decided |
 |---|---|---|---|---|
-| 1 |  |  |  |  |
-| 2 |  |  |  |  |
-| 3 |  |  |  |  |
-| 4 |  |  |  |  |
-| 5 |  |  |  |  |
+| 1 | Overall accuracy | ≥ 0.65 | MISSED | Seeds 42 and 7 scored 0.500. The target must hold on all three seeds, so seed 2024's 0.700 doesn't rescue it. |
+| 2 | F1 `skin_help` / `discussion` | each ≥ 0.60 | MISSED | `skin_help` passed on all seeds, but `discussion` F1 was 0.000 on seeds 42 and 7. |
+| 3 | F1 `routine_review` | ≥ 0.50 | MISSED | F1 was 0.000 on all three seeds. |
+| 4 | Balance in `labels.csv` | ≤ 60% and ≥ 8% | MET | 50.5% / 38.4% / 11.1%. This measures the data, so it is the same on every seed. |
+| 5 | Labeling consistency | ≥ 13 of 20 | pending | Needs the agreement step. See below. |
 
 **Diagnoses**
 
-<!-- For each miss: the cause, and how you know. The four common causes are:
-     too few examples for a label, a boundary you applied inconsistently, a
-     genuinely hard label pair, and a task the model can't reach from this
-     much data.
-
-     ⚠️ Use your agreement report as evidence. It is the only instrument you
-     have that can tell a LABELLING problem from a MODEL problem, and this
-     section is graded on whether you used it that way. -->
+**Criteria 1, 2 and 3: MISSED. Cause: the model collapsed to the majority class (undertraining).**
+Evidence: on seed 42 all 30 test posts were predicted `skin_help` (confusion matrix above),
+and seed 7 gave identical scores (accuracy 0.500, `skin_help` F1 0.667, all other F1 0.000).
+Training loss only fell from about 1.05 to 0.97 over 27 steps, and validation accuracy sat at
+0.500 for all three epochs on both seeds. Seed 2024 reached `discussion` F1 0.667, so the
+label is learnable, but `routine_review` stayed at 0.000 on every seed (16 training rows).
+The baseline also reached `routine_review` F1 0.800 from definitions alone, which suggests
+the labels are usable and the trained model simply did not learn them.
 
 
 
