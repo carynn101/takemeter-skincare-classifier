@@ -158,23 +158,21 @@ Raw collection files (copied page text and intermediate CSVs) are not committed.
 
 ## Baseline vs. Trained
 
-<!-- Both models on the same posts. `python baseline.py --trained results.json`
-     prints this table for you. -->
+Both models were scored on the same 30 posts in `test_split.csv` (the seed-42 split). The baseline is `facebook/bart-large-mnli` run zero-shot on `mps`, using only the three definitions in `label_definitions.txt`.
 
 | Measure | Baseline | Trained | Difference |
 |---|---|---|---|
-| Overall accuracy |  |  |  |
-| Macro F1 |  |  |  |
-| F1 — `label_one` |  |  |  |
-| F1 — `label_two` |  |  |  |
+| Overall accuracy | 0.700 | 0.500 | -0.200 |
+| Macro F1 | 0.690 | 0.222 | -0.468 |
+| F1 — `discussion` | 0.500 | 0.000 | -0.500 |
+| F1 — `routine_review` | 0.800 | 0.000 | -0.800 |
+| F1 — `skin_help` | 0.769 | 0.667 | -0.103 |
 
 **What I predicted before I looked:**
-<!-- Milestone 1 asks you to write this BEFORE seeing the trained numbers. A
-     prediction made afterwards isn't one. -->
+I had already seen my unit 5 trained numbers (accuracy 0.500; `discussion` and `routine_review` F1 of 0.000) before running the baseline, so this is not a blind prediction. Given those numbers, I expected the baseline to beat my model on every label, with `skin_help` the closest, since my model predicted that class for everything.
 
 **What the gap actually means:**
-<!-- If the baseline matched your trained model, your fine-tuning added
-     nothing — and that is a real finding, not a failure. Say it plainly. -->
+The baseline beat my trained model on all five measures, so fine-tuning on 138 titles added nothing over a zero-shot model reading my definitions. The gap is largest on `routine_review` (0.800 vs. 0.000), my thinnest label, where the trained model had only 16 training rows. Caveat: `routine_review` has just 3 test posts, so the baseline's 0.800 could move a lot on a different split, and this comparison covers seed 42 only.
 
 
 
@@ -187,22 +185,22 @@ Raw collection files (copied page text and intermediate CSVs) are not committed.
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. Overall accuracy | ≥ 0.65 | | | | |
+| 2. F1 `skin_help` / `discussion` | each ≥ 0.60 | _ / _ | _ / _ | _ / _ | |
+| 3. F1 `routine_review` | ≥ 0.50 | | | | |
+| 4. Balance (share per label) | ≤ 60% and ≥ 8% | 50.5 / 38.4 / 11.1% | same | same | MET |
+| 5. Labeling consistency | ≥ 13 of 20 | _ | n/a | n/a | |
 
 ### Confusion matrix
 
 <!-- ⚠️ TYPED AS A MARKDOWN TABLE. The notebook prints one ready to paste.
      An image of a matrix earns nothing. -->
 
-| true \ predicted |  |  |  |
+| true \ predicted | skin_help | discussion | routine_review |
 |---|---|---|---|
-| **** |  |  |  |
-| **** |  |  |  |
-| **** |  |  |  |
+| **skin_help** | | | |
+| **discussion** | | | |
+| **routine_review** | | | |
 
 **My biggest off-diagonal number, and what it means:**
 <!-- Not "the model made mistakes" — WHICH boundary it didn't learn, and which
