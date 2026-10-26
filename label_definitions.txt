@@ -1,10 +1,3 @@
-# Your label definitions, one per line, as `label: definition`.
-#
-# Copy these from your README so the baseline is judged on exactly the
-# definitions you wrote. baseline.py reads this file.
-#
-# Delete the examples below and put yours in.
-
-analysis: makes an argument backed by a specific, checkable fact
-hot_take: a confident claim with no support offered
-reaction: an immediate response to something that just happened
+skin_help: The poster centers their own skin concern or appearance, or asks what works for a skin problem, and wants advice or opinions.
+routine_review: The poster centers their own products or regimen, either asking for feedback on it or sharing it as something that works for them.
+discussion: The post starts a general conversation or shares information (trends, ingredients, marketing, news, community meta) rather than centering the poster's own skin or routine.

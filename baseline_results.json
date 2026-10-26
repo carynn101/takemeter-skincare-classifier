@@ -1,0 +1,184 @@
+{
+  "model": "facebook/bart-large-mnli",
+  "n": 30,
+  "seed": 42,
+  "held_out": true,
+  "used_definitions": true,
+  "scores": {
+    "n": 30,
+    "accuracy": 0.7,
+    "f1_macro": 0.6897435897435898,
+    "per_label": {
+      "discussion": {
+        "precision": 1.0,
+        "recall": 0.3333333333333333,
+        "f1": 0.5,
+        "support": 12
+      },
+      "routine_review": {
+        "precision": 1.0,
+        "recall": 0.6666666666666666,
+        "f1": 0.8,
+        "support": 3
+      },
+      "skin_help": {
+        "precision": 0.625,
+        "recall": 1.0,
+        "f1": 0.7692307692307693,
+        "support": 15
+      }
+    }
+  },
+  "predictions": [
+    {
+      "text": "how many pumps of this sunscreen should i be using?",
+      "gold": "discussion",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "Two rounds of Accutane and my forehead is already breaking out again??",
+      "gold": "skin_help",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "DEBUNKING MYTHS: Hydroquinone is safe.",
+      "gold": "discussion",
+      "predicted": "discussion"
+    },
+    {
+      "text": "year long battle, derm recently told me she thinks i have folliculitis, treatments aren't working",
+      "gold": "skin_help",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "My dad (70M) is asking about skincare products to help remove some of these blemishes and improve his skin.",
+      "gold": "skin_help",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "Beginner\u2019s guide to building a skincare routine?",
+      "gold": "discussion",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "red spots",
+      "gold": "skin_help",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "Skin texture / sebaceous filaments?",
+      "gold": "skin_help",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "Extremely dehydrated acne prone skin",
+      "gold": "skin_help",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "how to fade my acne scars/ how long?",
+      "gold": "skin_help",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "In your OWN Experience/ Opinions - Do YOU think moisturisers make your skin WORSE or BETTER?",
+      "gold": "discussion",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "I need a HOLY GRAIL Moisturizer",
+      "gold": "discussion",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "I need to exfoliate, but I can't",
+      "gold": "skin_help",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "What's the best alternative for retinoids?",
+      "gold": "discussion",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "I vaguely knew heavy sunscreen use could affect vitamin D, but I\u2019d never seen an actual year-long trial on it",
+      "gold": "discussion",
+      "predicted": "discussion"
+    },
+    {
+      "text": "eating sugar or fast food immediately breaks my chin out!",
+      "gold": "skin_help",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "skin is making me depressed",
+      "gold": "skin_help",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "I\u2019m 18 and I\u2019m starting to see forehead wrinkles",
+      "gold": "skin_help",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "Favorite tinted sunscreen?",
+      "gold": "discussion",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "Wondering if this is a good / safe routine",
+      "gold": "routine_review",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "struggling with acne",
+      "gold": "skin_help",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "What's the worst skincare mistake you've ever made?",
+      "gold": "discussion",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "23 feeling like 43. What to do?",
+      "gold": "skin_help",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "concerns with prescribed acne treatment",
+      "gold": "skin_help",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "Using differing and Retinol C on my routine",
+      "gold": "routine_review",
+      "predicted": "routine_review"
+    },
+    {
+      "text": "Those crumbs from Korean peeling gels aren't just dead skin. The gel clumps on a rubber glove too",
+      "gold": "discussion",
+      "predicted": "discussion"
+    },
+    {
+      "text": "Looking for a post-retinol night cream",
+      "gold": "discussion",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "lifelong acne, finally seeing progress.",
+      "gold": "skin_help",
+      "predicted": "skin_help"
+    },
+    {
+      "text": "2 month progress!",
+      "gold": "routine_review",
+      "predicted": "routine_review"
+    },
+    {
+      "text": "Mazal Group scam",
+      "gold": "discussion",
+      "predicted": "discussion"
+    }
+  ]
+}
