@@ -87,7 +87,7 @@ No label is above the 70% cap. `routine_review` is the thinnest label, which is 
 ## The Training Run
 
 - **Starting model:** `distilbert-base-uncased`, fine-tuned for 3-way text classification
-- **Settings:** seed 42, 3 epochs, learning rate 2e-5, batch size 16, 128 tokens per post. I did not change any hyperparameter. (unit 5 run; unit 6 changes epochs, see The Improvement).
+- **Settings:** seed 42, 3 epochs, learning rate 2e-5, batch size 16, 128 tokens per post. I did not change any hyperparameter in this unit 5 run. (Unit 6 changes epochs; see The Improvement).
 - **Split:** the notebook's 70/15/15 split gave 138 train, 30 validation, and 30 test rows.
 
 | Label | Train | Val | Test |
@@ -116,7 +116,7 @@ My first training run, before I corrected 3 labels, scored accuracy 0.567 and ma
 
 ### Results against my pre-registered criteria
 
-I wrote `criteria.md` before training and did not edit it afterward. Except the unit 6 revision to criterion 5, kept below the original.
+I wrote `criteria.md` before training and did not change any target afterward, apart from the unit 6 revision to criterion 5, which is kept below the original.
 
 | Criterion | Target | Result | Outcome |
 |---|---|---|---|
@@ -132,7 +132,7 @@ I wrote `criteria.md` before training and did not edit it afterward. Except the 
 1. **Stress-testing my labels.** I gave Claude my label definitions, and it wrote eight invented posts that sit on my boundaries. I labeled them cold and hesitated on three. Posts that mixed a personal detail with a general question exposed a gap in my first decision rule, so I added Tie-break A and Tie-break B.
 2. **Pre-labeling.** Claude suggested labels for 178 of the 198 rows from my definitions. I reviewed them and changed 3. I labeled the other 20 rows myself with no tools and no suggestions.
 3. **Other help.** Claude helped me write the scripts that collect and clean titles and write labels into the CSV, suggested the numeric targets in `criteria.md` (which I reviewed and edited before training), and helped me debug the notebook environment.
-4. Unit 6. I labeled the 30 staff posts myself, then got staff_labels.csv from the course Slack channel and ran agreement.py. Claude helped me understand the staff decision rules, drafted the adjudication entries, run logs and write-ups from my real outputs, and suggested the epochs change. I reviewed and edited them. My instructor approved using Claude for this.
+4. **Unit 6.** I labeled the 30 staff posts myself, then got `staff_labels.csv` from the course Slack channel and ran `agreement.py`. Claude helped me understand the staff decision rules, drafted the adjudication entries, run logs and write-ups from my real outputs, and suggested the epochs change. I reviewed and edited them. My instructor approved using Claude for this.
 
 ## Repository
 
@@ -154,8 +154,7 @@ I wrote `criteria.md` before training and did not edit it afterward. Except the 
 | `extract_titles.py`, `make_csv.py`, `clean_labels.py` | Title collection and cleaning |
 | `apply_prelabels.py`, `apply_middle.py`, `apply_cold.py`, `apply_review.py` | Scripts that write labels into `labels.csv` |
 
-Raw collection files (copied page text and intermediate CSVs) are not committed.
-
+Raw collection files (copied page text and most intermediate CSVs) are not committed. `labels_template.csv` is the starter template from unit 5.
 
 ---
 ## Stretch Features Declared
@@ -194,7 +193,7 @@ Before the change, the baseline beat my trained model on all five measures, so f
 | 4. Balance in `labels.csv` | ≤ 60% and ≥ 8% | 50.5 / 38.4 / 11.1% | same | same | MET |
 | 5. Labeling consistency | ≥ 13 of 20 | 20 / 30 (staff set) | n/a | n/a | MET |
 
-Accuracy ranged from 0.500 to 0.700 across seeds, a 20-point spread, and discussion F1 ranged from 0.000 to 0.667. Because each test split holds only 30 rows, one or two posts move these scores a lot. This is too noisy for a stable measure.
+Accuracy ranged from 0.500 to 0.700 across seeds, a 20-point spread, and `discussion` F1 ranged from 0.000 to 0.667. Because each test split holds only 30 rows, one or two posts move these scores a lot. This is too noisy for a stable measure.
 
 
 ### Confusion matrix (seed 42, device: `mps`)
@@ -281,7 +280,7 @@ Ten posts disagreed. Six were posts where staff said `analysis` and I called `re
 >
 > *Staff said `analysis` / I said `reaction`.*
 >
-> *My call, and why:* Staff is right on the label, though the taxonomy has a gap. It lists "a stat, a date, a time, a quote, a named comparison" as checkable facts, but doesn't say whether the writer's own training data counts. I read it as personal experience. The post compares two years of times and mileage, and the comparison carries the argument against "carbon plates are the whole story." It spans a year, so it is not "in the last few hours" as rule 2 describes `reaction`. I also labeled staff post 2 `analysis`, which is also self-measured, so my reading was inconsistent.
+> *My call, and why:* Staff is right on the label, though the taxonomy has a gap. It lists "a stat, a date, a time, a quote, a named comparison" as checkable facts, but doesn't say whether the writer's own training data counts. I read it as personal experience. The post compares two years of times and mileage, and the comparison carries the argument against "carbon plates are the whole story." It spans a year, so it is not "in the last few hours," which is how the `reaction` definition describes that label. I also labeled staff post 2 `analysis`, which is also self-measured, so my reading was inconsistent.
 >
 > *Which pile:* (b)
 
@@ -299,7 +298,7 @@ Ten posts disagreed. Six were posts where staff said `analysis` and I called `re
 >
 > *Staff said `analysis` / I said `reaction`.*
 >
-> *My call, and why:* Staff is right. The post is a controlled comparison (same loop, same effort, 90 seconds over six miles) used to argue against a common claim. It was run over a fortnight, so it isn't a reaction to something that just happened. Disagreement 2, the taxonomy doesn't say whether self-collected measurements count as checkable, but the comparison does the work in the argument.
+> *My call, and why:* Staff is right. The post is a controlled comparison (same loop, same effort, 90 seconds over six miles) used to argue against a common claim. It was run over a fortnight, so it isn't a reaction to something that just happened. As in disagreement 2, the taxonomy doesn’t say whether self-collected measurements count as checkable, but the comparison does the work in the argument.
 >
 > *Which pile:* (b)
 
@@ -358,8 +357,7 @@ Ten posts disagreed. Six were posts where staff said `analysis` and I called `re
 > *Which pile:* (a)
 
 **What the pattern in my disagreements tells me:**
-Eight of ten disagreements are pile (a): the rule covered the case and I applied it loosely. The two pile (b) cases (carbon plates, same loop at 4C and 24C) share a real gap, because the taxonomy never says whether self-collected measurements count as a checkable fact. In the six `analysis` misses, a conclusion sentence with attitude followed the data, and I let that tone decide the label. In the four `hot_take` misses, I let a heated or tired tone stand in for rule 2's test of whether the post is about the writer's experience. I labeled posts 1, 2, 4 and 9 of the staff set `analysis`, and those have the same structure as the six I missed, so I applied one rule two ways. This suggests I may apply written rules inconsistently, but it can’t tell me whether my own skin_help and routine_review labels were inconsistent, because the staff taxonomy uses different labels.
-
+Eight of ten disagreements are pile (a): the rule covered the case and I applied it loosely. The two pile (b) cases (carbon plates, same loop at 4C and 24C) share a real gap, because the taxonomy never says whether self-collected measurements count as a checkable fact. In the six `analysis` misses, a conclusion sentence with attitude followed the data, and I let that tone decide the label. In the four `hot_take` misses, I let a heated or tired tone stand in for rule 2's test of whether the post is about the writer's experience. I labeled staff-set posts 1, 2, 4 and 9 `analysis`, and those have the same structure as the six I missed, so I applied one rule two ways. This suggests I may apply written rules inconsistently, but it can’t tell me whether my own `skin_help` and `routine_review` labels were inconsistent, because the staff taxonomy uses different labels.
 
 ---
 
@@ -379,7 +377,7 @@ Yes, on all three seeds the model's most confident predictions were right more o
 | 7 | 1.0 | 0.6 | 0.687 | 0.563 |
 | 2024 | 0.9 | 0.6 | 0.785 | 0.690 |
 
-Before the change, the collapsed seed-42 model scored 0.9 vs. 0.0 on the two thirds, but its mean confidence was nearly flat (0.502 when right, 0.457 when wrong), so that gap came from a model leaning on one label. After training, the gap is smaller but the confidence itself separates right from wrong. Caveat: each third is 10 posts, so one post moves a third by 10 points.
+Before the change, the collapsed seed-42 model scored 0.9 vs. 0.0 on the two thirds, but its mean confidence was nearly flat (0.502 when right, 0.457 when wrong), so that gap likely came from a model leaning on one label. After training, the gap is smaller but the confidence itself separates right from wrong. Caveat: each third is 10 posts, so one post moves a third by 10 points.
 
 ### Run Log — After
 
