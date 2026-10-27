@@ -236,54 +236,121 @@ the labels are usable and the trained model simply did not learn them.
 
 ## Agreement Report
 
-<!-- Your rate against the staff set, and every disagreement adjudicated.
+## Agreement Report
 
-     Remember you labelled these 30 under the STAFF taxonomy in
-     data/staff_taxonomy.md, not your own — so every argument below is made
-     from those definitions and those decision rules. -->
+I labeled the 30 staff posts under `data/staff_taxonomy.md` before opening the staff key, and committed `my_staff_labels.csv` before running `agreement.py`.
 
-**Agreement rate:** ___ / 30 = ___%
+**Agreement rate:** 20 / 30 = 67%
 
-<!-- Nobody grades this number. A 60% who argues every disagreement from the
-     stated rules beats a 95% who wrote "staff was right" nine times. Several
-     of the 30 were chosen because they're genuinely ambiguous — you should be
-     winning some of these. -->
+Ten posts disagreed. Six were posts where staff said `analysis` and I called `reaction` or `hot_take` (3, 5, 6, 7, 8, 10). Four were posts where staff said `hot_take` and I said `reaction` (13, 14, 18, 20).
+
+| # | Post (short) | Staff | Me | Pile |
+|---|---|---|---|---|
+| 1 | Club championship scoring change, 2019 | `analysis` | `reaction` | (a) |
+| 2 | Carbon plates, 2% + 2% | `analysis` | `reaction` | (b) |
+| 3 | 41% first-timers vs. 26% | `analysis` | `hot_take` | (a) |
+| 4 | Same loop in 4C and 24C | `analysis` | `reaction` | (b) |
+| 5 | Entry no-starts since 2012 | `analysis` | `hot_take` | (a) |
+| 6 | Three runners, different shoes | `analysis` | `hot_take` | (a) |
+| 7 | Tuesday session for everyone | `hot_take` | `reaction` | (a) |
+| 8 | Times down 3% since shoe rules | `hot_take` | `reaction` | (a) |
+| 9 | Track sessions wasted under 8-min miles | `hot_take` | `reaction` | (a) |
+| 10 | Every injury thread is the same | `hot_take` | `reaction` | (a) |
 
 **Disagreements**
 
-<!-- Three lines each: the post, both labels, and who you think is right and
-     why — grounded in the staff definitions you were both applying.
+**1. Club championship scoring change**
+> *The post:* "The club championship scoring changed in 2019 from top-6 to top-10. Since then our B team has finished above the A team twice. That's not depth improving, it's the scoring rewarding turnout."
+>
+> *Staff said `analysis` / I said `reaction`.*
+>
+> *My call, and why:* Staff is right. I hesitated between `analysis` and `reaction` (rule 3). The post contains a date, a rule change and a count of results, and the conclusion rests on them. Delete them and no argument is left. Rule 3 says recency does not outrank evidence, and the dismissive last sentence sits on top of an argument. I let the tone decide.
+>
+> *Which pile:* (a)
 
-     Then sort each into one of three piles:
-       (a) the rule covered it and I applied it loosely → a consistency problem
-       (b) the rule genuinely doesn't say               → a gap in the definitions
-       (c) the rule is ambiguous here and my reading is defensible → argue it.
-           This is a legitimate win.
+**2. Carbon plates**
+> *The post:* "Carbon plates aren't the whole story. My times dropped 2% in the shoes and another 2% the following year in the same pair, when the only thing that changed was going from 35 to 50 miles a week."
+>
+> *Staff said `analysis` / I said `reaction`.*
+>
+> *My call, and why:* Staff is right on the label, though the taxonomy has a gap. It lists "a stat, a date, a time, a quote, a named comparison" as checkable facts, but doesn't say whether the writer's own training data counts. I read it as personal experience. The post compares two years of times and mileage, and the comparison carries the argument against "carbon plates are the whole story." It spans a year, so it is not "in the last few hours" as rule 2 describes `reaction`. I also labeled post 2 of this set (my sleep tracking) `analysis`, which is also self-measured, so my reading was inconsistent.
+>
+> *Which pile:* (b)
 
-     Pile (a) is the one that matters most for your diagnosis: if you applied a
-     written rule two different ways on 30 posts, that is direct evidence about
-     what you did across your own 200. -->
+**3. First-timers in the entry lists**
+> *The post:* "Checked the entry lists. 41% of this year's field have never run the distance before, against 26% five years ago. That's why the finish-line photos look different, not because standards dropped."
+>
+> *Staff said `analysis` / I said `hot_take`.*
+>
+> *My call, and why:* Staff is right. Rule 1 asks whether the fact carries the argument. The 41%-versus-26% comparison is the reason given for the conclusion, so deleting it leaves nothing. I took the confident last sentence as an unsupported claim, but support is offered in the sentences before it.
+>
+> *Which pile:* (a)
 
-**1.**
-> *The post:*
+**4. Same loop in 4C and 24C**
+> *The post:* "Ran the same loop in 4C and in 24C within a fortnight, same effort by heart rate. 90 seconds slower in the heat over six miles. People keep saying heat costs you 'abit' and it's more than that."
 >
-> *Staff said / I said:*
+> *Staff said `analysis` / I said `reaction`.*
 >
-> *My call, and why:*
+> *My call, and why:* Staff is right. The post is a controlled comparison (same loop, same effort, 90 seconds over six miles) used to argue against a common claim. It was run over a fortnight, so it isn't a reaction to something that just happened. As with post 2 (carbon plates), the taxonomy doesn't say whether self-collected measurements count as checkable, but the comparison does the work in the argument.
 >
-> *Which pile:*
+> *Which pile:* (b)
 
-**2.**
-> *The post:*
+**5. No-starts since 2012**
+> *The post:* "Went back through the club results going back to 2012. Every single year the number of people who enter the spring marathon and don't start it sits between 18 and 23 percent. It's not a bad-luck year, it's the base rate."
 >
-> *Staff said / I said:*
+> *Staff said `analysis` / I said `hot_take`.*
 >
-> *My call, and why:*
+> *My call, and why:* Staff is right. The 18 to 23 percent range across every year since 2012 is the evidence for "it's the base rate." I read "it's the base rate" as a restatement of the data, but the sentence before it shows the data is what supports it.
 >
-> *Which pile:*
+> *Which pile:* (a)
+
+**6. Three runners, different shoes**
+> *The post:* "Three of us ran the same session on the same day, different shoes, within 10 seconds of each other over 5 miles. I'm not saying shoes do nothing, but whatever they do was smaller than the noise between three people."
+>
+> *Staff said `analysis` / I said `hot_take`.*
+>
+> *My call, and why:* Staff is right. The hedge made it read like opinion to me, but the 10-second spread over 5 miles is the reason for "smaller than the noise between three people." Rule 1's delete test leaves no conclusion without it.
+>
+> *Which pile:* (a)
+
+**7. Tuesday session**
+> *The post:* "The club needs to stop pretending the Tuesday session is for everyone. It isn't and it never has been."
+>
+> *Staff said `hot_take` / I said `reaction`.*
+>
+> *My call, and why:* Staff is right. Rule 2 separates a post about the writer's experience from a general claim about the world, and this one makes a claim about the club with no event and no account of how the writer felt. Rule 2 says a post can be heated and still be `hot_take`. I weighed the frustrated tone and didn't apply the rule.
+>
+> *Which pile:* (a)
+
+**8. Times down 3%**
+> *The post:* "Times are down about 3% since the shoe rules changed, so obviously the shoes are the whole story and the sport has a problem."
+>
+> *Staff said `hot_take` / I said `reaction`.*
+>
+> *My call, and why:* Staff is right. I weighed `reaction` because the second half sounded like feeling. But "the sport has a problem" is a claim about the world, and the 3% is a flourish on a conclusion already reached ("obviously"). It matches rule 1's own `hot_take` example almost exactly.
+>
+> *Which pile:* (a)
+
+**9. Track sessions**
+> *The post:* "Track sessions are wasted on anyone running slower than 8 minute miles. You'd get more out of just running more."
+>
+> *Staff said `hot_take` / I said `reaction`.*
+>
+> *My call, and why:* Staff is right. I hesitated between `hot_take` and `reaction` (rule 2) and went with `reaction` because re-reading it felt like a response to something. The post doesn't say what it is responding to, and nothing in it describes the writer's own experience. The 8-minute-mile figure is a cutoff, not a fact supporting the claim, so rule 1 doesn't make it `analysis` either.
+>
+> *Which pile:* (a)
+
+**10. Injury threads**
+> *The post:* "Every injury thread on this forum is the same injury and the same three replies."
+>
+> *Staff said `hot_take` / I said `reaction`.*
+>
+> *My call, and why:* Staff is right. The weary tone is the case for `reaction`, but the post describes the forum in general and not a recent event happening to the writer. Rule 2 puts a general assertion about the world under `hot_take`.
+>
+> *Which pile:* (a)
 
 **What the pattern in my disagreements tells me:**
-
+Eight of ten disagreements are pile (a): the rule covered the case and I applied it loosely. The two pile (b) cases (carbon plates, same loop at 4C and 24C) share a real gap, because the taxonomy never says whether self-collected measurements count as a checkable fact. In the six `analysis` misses, a conclusion sentence with attitude followed the data, and I let that tone decide the label. In the four `hot_take` misses, I let a heated or tired tone stand in for rule 2's test of whether the post is about the writer's experience. I labeled posts 1, 2, 4 and 9 of the staff set `analysis`, and those have the same structure as the six I missed, so I applied one rule two ways. I used the same label boundaries across my own 200 labels, so this is evidence that I may have been inconsistent there too, and I treat it as a possible labeling problem and not a settled one.
 
 
 ---
