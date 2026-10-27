@@ -26,7 +26,7 @@ These targets were set before training, before I saw any results.
 
 > **Revised in unit 6:** I agree with the staff labels on at least 20 of the 30 staff posts (65%).
 >
-> **Why revised:** The original needs a second person to label my 20 `cold` rows under my own taxonomy, and this unit gave me no such labeler, so I could not produce a verdict from it. The 65% threshold is unchanged. Only the instrument changed. I wrote this revision before seeing the result, but I am recording it after the agreement run, so the timing is not clean.
+> **Why revised:** The original needs a second person to label my 20 `cold` rows under my own taxonomy, and this unit gave me no such labeler, so I could not produce a verdict from it. The 65% threshold is unchanged. Only the instrument changed. I added this revision after the agreement run showed 20 of 30 (67%), so it was not set in advance. The original criterion is left above unchanged.
 
 ---
 
@@ -60,34 +60,3 @@ whether you hit them:
   Pick with that in mind — it is stricter than it first sounds.
 
 ---
-
-<!-- ─────────────────────────────────────────────────────────────────────────
-     UNIT 6 — read this before you change anything above.
-
-     If a criterion turns out to be BROKEN rather than merely unmet, you can
-     revise it, and that earns credit. But never delete or edit the original
-     line. Add the revision underneath, like this:
-
-         ## 2. Every label performs acceptably
-
-         The model performs well on all labels.
-
-         **Why this target:** ...
-
-         > **Revised in unit 6:** Every label has an F1 of at least 0.60 on
-         > the held-out set.
-         >
-         > **Why revised:** "performs well" gave me nothing to check. I
-         > couldn't produce a verdict from it at all.
-
-     That's a revision because the criterion couldn't be MEASURED.
-
-     Lowering a target because you missed it is not a revision, and it costs
-     you the point:
-
-         ✗ "Overall accuracy of at least 0.65" → "at least 0.55", because
-            0.65 turned out to be optimistic for 200 examples.
-
-     A number you missed stays where it is, gets diagnosed, and gets a fix
-     attempted. That's where the points are.
-     ───────────────────────────────────────────────────────────────────────── -->

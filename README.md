@@ -1,8 +1,8 @@
 # TakeMeter: Skincare Post Classifier
 
-A fine-tuned text classifier that sorts r/SkincareAddiction post titles by what the poster is doing. This is the build unit of a two-unit project: here I design the labels, label the data, train a model, and write down what "working" means before seeing any results. The next unit tests the model against a baseline and a second labeler.
+A fine-tuned text classifier that sorts r/SkincareAddiction post titles by what the poster is doing. This is the build unit of a two-unit project: here I design the labels, label the data, train a model, and write down what "working" means before seeing any results. Unit 6 tests it against a zero-shot baseline and a staff labeling set.
 
-**Status:** trained, but the model has not learned much beyond the majority class (see [The Training Run](#the-training-run)). The data, the labeling decisions, and the pre-registered criteria are the main deliverables of this unit.
+**Status:** Trained and tested. After a 3 to 10 epoch change, accuracy is 0.73 to 0.80 across three seeds, but routine_review is never predicted (see The Improvement).
 
 ## What This Does
 
@@ -87,7 +87,7 @@ No label is above the 70% cap. `routine_review` is the thinnest label, which is 
 ## The Training Run
 
 - **Starting model:** `distilbert-base-uncased`, fine-tuned for 3-way text classification
-- **Settings:** seed 42, 3 epochs, learning rate 2e-5, batch size 16, 128 tokens per post. I did not change any hyperparameter.
+- **Settings:** seed 42, 3 epochs, learning rate 2e-5, batch size 16, 128 tokens per post. I did not change any hyperparameter. (unit 5 run; unit 6 changes epochs, see The Improvement).
 - **Split:** the notebook's 70/15/15 split gave 138 train, 30 validation, and 30 test rows.
 
 | Label | Train | Val | Test |
@@ -116,7 +116,7 @@ My first training run, before I corrected 3 labels, scored accuracy 0.567 and ma
 
 ### Results against my pre-registered criteria
 
-I wrote `criteria.md` before training and did not edit it afterward.
+I wrote `criteria.md` before training and did not edit it afterward. Except the unit 6 revision to criterion 5, kept below the original.
 
 | Criterion | Target | Result | Outcome |
 |---|---|---|---|
@@ -132,27 +132,30 @@ I wrote `criteria.md` before training and did not edit it afterward.
 1. **Stress-testing my labels.** I gave Claude my label definitions, and it wrote eight invented posts that sit on my boundaries. I labeled them cold and hesitated on three. Posts that mixed a personal detail with a general question exposed a gap in my first decision rule, so I added Tie-break A and Tie-break B.
 2. **Pre-labeling.** Claude suggested labels for 178 of the 198 rows from my definitions. I reviewed them and changed 3. I labeled the other 20 rows myself with no tools and no suggestions.
 3. **Other help.** Claude helped me write the scripts that collect and clean titles and write labels into the CSV, suggested the numeric targets in `criteria.md` (which I reviewed and edited before training), and helped me debug the notebook environment.
+4. Unit 6. I labeled the 30 staff posts myself, then got staff_labels.csv from the course Slack channel and ran agreement.py. Claude helped me understand the staff decision rules, drafted the adjudication entries, run logs and write-ups from my real outputs, and suggested the epochs change. I reviewed and edited them. My instructor approved using Claude for this.
 
 ## Repository
 
 | File | What it is |
 |---|---|
-| `criteria.md` | Five acceptance criteria with targets and reasons, written before training |
+| `criteria.md` | Five acceptance criteria written before training, plus the unit 6 revision to criterion 5 |
 | `labels.csv` | 198 labeled titles (`text`, `label`, `note`) |
-| `results.json` | Metrics, device, and settings from the final training run |
-| `test_split.csv` | The held-out test rows, used by the next unit's baseline |
+| `results.json` | Metrics, device, and settings from the unit 5 training run |
+| `test_split.csv` | Held-out test rows (seed 42), used by the baseline |
 | `notes/` | Community notes and the label taxonomy as I wrote them |
-| `takemeter.ipynb` | Training notebook |
+| `takemeter.ipynb` | Training notebook (committed in the after configuration, `EPOCHS = 10`) |
+| `label_definitions.txt` | The three label definitions the zero-shot baseline reads |
+| `baseline.py`, `baseline_results.json` | Zero-shot baseline script and its results |
+| `results_three_seeds_before.json` | Three-seed run at 3 epochs |
+| `results_three_seeds_after.json` | Three-seed run at 10 epochs |
+| `my_staff_labels.csv` | My labels for the 30 staff posts, under the staff taxonomy |
+| `data/staff_labels.csv`, `data/staff_taxonomy.md`, `data/staff_posts.csv` | Staff reference labels, taxonomy and posts |
+| `agreement.py`, `agreement_results.json` | Agreement script and my results against the staff set |
 | `extract_titles.py`, `make_csv.py`, `clean_labels.py` | Title collection and cleaning |
 | `apply_prelabels.py`, `apply_middle.py`, `apply_cold.py`, `apply_review.py` | Scripts that write labels into `labels.csv` |
 
 Raw collection files (copied page text and intermediate CSVs) are not committed.
 
-
-<!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
-
-     Don't fill these in during unit 5.
-     ═══════════════════════════════════════════════════════════════════ -->
 
 ---
 ## Stretch Features Declared
@@ -161,21 +164,21 @@ Raw collection files (copied page text and intermediate CSVs) are not committed.
 
 ## Baseline vs. Trained
 
-Both models were scored on the same 30 posts in `test_split.csv` (the seed-42 split). The baseline is `facebook/bart-large-mnli` run zero-shot on `mps`, using only the three definitions in `label_definitions.txt`.
+Both models were scored on the same 30 posts in `test_split.csv` (the seed-42 split); the "after" column is the same split after the epochs change described in [The Improvement](#the-improvement). The baseline is `facebook/bart-large-mnli` run zero-shot on `mps`, using only the three definitions in `label_definitions.txt`.
 
-| Measure | Baseline | Trained | Difference |
+| Measure (seed 42) | Baseline | Trained before (3 epochs) | Trained after (10 epochs) |
 |---|---|---|---|
-| Overall accuracy | 0.700 | 0.500 | -0.200 |
-| Macro F1 | 0.690 | 0.222 | -0.468 |
-| F1 — `discussion` | 0.500 | 0.000 | -0.500 |
-| F1 — `routine_review` | 0.800 | 0.000 | -0.800 |
-| F1 — `skin_help` | 0.769 | 0.667 | -0.103 |
+| Overall accuracy | 0.700 | 0.500 | 0.800 |
+| Macro F1 | 0.690 | 0.222 | 0.558 |
+| F1 — `discussion` | 0.500 | 0.000 | 0.800 |
+| F1 — `routine_review` | 0.800 | 0.000 | 0.000 |
+| F1 — `skin_help` | 0.769 | 0.667 | 0.875 |
 
 **What I predicted before I looked:**
 I had already seen my unit 5 trained numbers (accuracy 0.500; `discussion` and `routine_review` F1 of 0.000) before running the baseline, so this is not a blind prediction. Given those numbers, I expected the baseline to beat my model on every label, with `skin_help` the closest, since my model predicted that class for everything.
 
 **What the gap actually means:**
-The baseline beat my trained model on all five measures, so fine-tuning on 138 titles added nothing over a zero-shot model reading my definitions. The gap is largest on `routine_review` (0.800 vs. 0.000), my thinnest label, where the trained model had only 16 training rows. Caveat: `routine_review` has just 3 test posts, so the baseline's 0.800 could move a lot on a different split, and this comparison covers seed 42 only.
+Before the change, the baseline beat my trained model on all five measures, so fine-tuning on 138 titles at 3 epochs added nothing over a zero-shot model reading my definitions. After raising epochs to 10, the trained model beats the baseline on accuracy (0.800 vs. 0.700), `skin_help` F1 (0.875 vs. 0.769) and `discussion` F1 (0.800 vs. 0.500), and loses on `routine_review` F1 (0.000 vs. 0.800) and therefore on macro F1 (0.558 vs. 0.690). The gap is largest on `routine_review`, my thinnest label, where the trained model had only 16 training rows. Caveat: `routine_review` has just 3 test posts, so the baseline's 0.800 could move a lot on a different split, and this comparison covers seed 42 only.
 
 
 ---
@@ -189,7 +192,7 @@ The baseline beat my trained model on all five measures, so fine-tuning on 138 t
 | 2. F1 `skin_help` / `discussion` | each ≥ 0.60 | 0.667 / 0.000 | 0.667 / 0.000 | 0.788 / 0.667 | MISSED |
 | 3. F1 `routine_review` | ≥ 0.50 | 0.000 | 0.000 | 0.000 | MISSED |
 | 4. Balance in `labels.csv` | ≤ 60% and ≥ 8% | 50.5 / 38.4 / 11.1% | same | same | MET |
-| 5. Labeling consistency | ≥ 13 of 20 | pending | n/a | n/a | pending |
+| 5. Labeling consistency | ≥ 13 of 20 | 20 / 30 (staff set) | n/a | n/a | MET |
 
 Accuracy ranged from 0.500 to 0.700 across seeds, a 20-point spread, and discussion F1 ranged from 0.000 to 0.667. Because each test split holds only 30 rows, one or two posts move these scores a lot. This is too noisy for a stable measure.
 
@@ -211,6 +214,8 @@ Accuracy ranged from 0.500 to 0.700 across seeds, a 20-point spread, and discuss
 
 ## Verdicts and Diagnoses
 
+### Verdicts (before the change)
+
 | # | Criterion | Target | Verdict | How I decided |
 |---|---|---|---|---|
 | 1 | Overall accuracy | ≥ 0.65 | MISSED | Seeds 42 and 7 scored 0.500. The target must hold on all three seeds, so seed 2024's 0.700 doesn't rescue it. |
@@ -218,6 +223,8 @@ Accuracy ranged from 0.500 to 0.700 across seeds, a 20-point spread, and discuss
 | 3 | F1 `routine_review` | ≥ 0.50 | MISSED | F1 was 0.000 on all three seeds. |
 | 4 | Balance in `labels.csv` | ≤ 60% and ≥ 8% | MET | 50.5% / 38.4% / 11.1%. This measures the data, so it is the same on every seed. |
 | 5 | Labeling consistency | ≥ 13 of 20 (revised: ≥ 20 of 30 staff posts) | MET | 20 of 30 = 67% against the staff set. The original instrument (a second labeler on my 20 `cold` rows) was never available, so I used the revision recorded in `criteria.md`. |
+
+These verdicts are from the three-seed run at 3 epochs. After the epochs change, criteria 1 and 2 flipped to MET, criterion 3 stayed MISSED, and criteria 4 and 5 stayed MET. The post-change verdicts are in the [Run Log — After](#run-log--after) table under The Improvement.
 
 **Diagnoses**
 
@@ -229,12 +236,13 @@ Training loss only fell from about 1.05 to 0.97 over 27 steps, and validation ac
 label is learnable, but `routine_review` stayed at 0.000 on every seed (16 training rows).
 The baseline also reached `routine_review` F1 0.800 from definitions alone, which suggests
 the labels are usable and the trained model simply did not learn them.
+My agreement report (20/30; 8 of 10 disagreements were rules I applied loosely) shows I can apply written boundaries inconsistently, but it was scored under the staff taxonomy, so it can’t explain this collapse. The collapse is explained by the flat training loss.
 
+**Criterion 3 (`routine_review` F1): MISSED. Cause: too few examples, with a possible boundary problem.**
+Evidence: `routine_review` F1 was 0.000 on all three seeds before the change and still 0.000 after training ten epochs, while `skin_help` and `discussion` rose above 0.70. It had 16 of 138 training rows (about 12%) and 3 test rows. After the change the matrix shows it was never predicted on any seed, and 8 of its 9 test posts across the three seeds were called `discussion` (the other went to `skin_help`). That points at the `routine_review` / `discussion` edge, not just the `skin_help` edge I expected. One suspect is my relabeled "A brief overview of acne types & treatments" row, which reads like `discussion`, though I haven't tested that. The agreement report can't confirm a labeling problem for this label, because it was scored under the staff taxonomy. It shows I applied a written rule loosely in 8 of 10 disagreements, so inconsistency is possible but unproven. The baseline reached `routine_review` F1 0.800 on the same 3 test posts, so the label is usable from definitions alone.
 
 
 ---
-
-## Agreement Report
 
 ## Agreement Report
 
@@ -242,7 +250,7 @@ I labeled the 30 staff posts under `data/staff_taxonomy.md` before opening the s
 
 **Agreement rate:** 20 / 30 = 67%
 
-Ten posts disagreed. Six were posts where staff said `analysis` and I called `reaction` or `hot_take` (3, 5, 6, 7, 8, 10). Four were posts where staff said `hot_take` and I said `reaction` (13, 14, 18, 20).
+Ten posts disagreed. Six were posts where staff said `analysis` and I called `reaction` or `hot_take` (3, 5, 6, 7, 8, 10). Four were posts where staff said `hot_take` and I said `reaction` (13, 14, 18, 20). (numbers below are my disagreement list, 1 to 10; the numbers above are post positions in staff_posts.csv).
 
 | # | Post (short) | Staff | Me | Pile |
 |---|---|---|---|---|
@@ -273,7 +281,7 @@ Ten posts disagreed. Six were posts where staff said `analysis` and I called `re
 >
 > *Staff said `analysis` / I said `reaction`.*
 >
-> *My call, and why:* Staff is right on the label, though the taxonomy has a gap. It lists "a stat, a date, a time, a quote, a named comparison" as checkable facts, but doesn't say whether the writer's own training data counts. I read it as personal experience. The post compares two years of times and mileage, and the comparison carries the argument against "carbon plates are the whole story." It spans a year, so it is not "in the last few hours" as rule 2 describes `reaction`. I also labeled post 2 of this set (my sleep tracking) `analysis`, which is also self-measured, so my reading was inconsistent.
+> *My call, and why:* Staff is right on the label, though the taxonomy has a gap. It lists "a stat, a date, a time, a quote, a named comparison" as checkable facts, but doesn't say whether the writer's own training data counts. I read it as personal experience. The post compares two years of times and mileage, and the comparison carries the argument against "carbon plates are the whole story." It spans a year, so it is not "in the last few hours" as rule 2 describes `reaction`. I also labeled staff post 2 `analysis`, which is also self-measured, so my reading was inconsistent.
 >
 > *Which pile:* (b)
 
@@ -291,7 +299,7 @@ Ten posts disagreed. Six were posts where staff said `analysis` and I called `re
 >
 > *Staff said `analysis` / I said `reaction`.*
 >
-> *My call, and why:* Staff is right. The post is a controlled comparison (same loop, same effort, 90 seconds over six miles) used to argue against a common claim. It was run over a fortnight, so it isn't a reaction to something that just happened. As with post 2 (carbon plates), the taxonomy doesn't say whether self-collected measurements count as checkable, but the comparison does the work in the argument.
+> *My call, and why:* Staff is right. The post is a controlled comparison (same loop, same effort, 90 seconds over six miles) used to argue against a common claim. It was run over a fortnight, so it isn't a reaction to something that just happened. Disagreement 2, the taxonomy doesn't say whether self-collected measurements count as checkable, but the comparison does the work in the argument.
 >
 > *Which pile:* (b)
 
@@ -350,7 +358,7 @@ Ten posts disagreed. Six were posts where staff said `analysis` and I called `re
 > *Which pile:* (a)
 
 **What the pattern in my disagreements tells me:**
-Eight of ten disagreements are pile (a): the rule covered the case and I applied it loosely. The two pile (b) cases (carbon plates, same loop at 4C and 24C) share a real gap, because the taxonomy never says whether self-collected measurements count as a checkable fact. In the six `analysis` misses, a conclusion sentence with attitude followed the data, and I let that tone decide the label. In the four `hot_take` misses, I let a heated or tired tone stand in for rule 2's test of whether the post is about the writer's experience. I labeled posts 1, 2, 4 and 9 of the staff set `analysis`, and those have the same structure as the six I missed, so I applied one rule two ways. I used the same label boundaries across my own 200 labels, so this is evidence that I may have been inconsistent there too, and I treat it as a possible labeling problem and not a settled one.
+Eight of ten disagreements are pile (a): the rule covered the case and I applied it loosely. The two pile (b) cases (carbon plates, same loop at 4C and 24C) share a real gap, because the taxonomy never says whether self-collected measurements count as a checkable fact. In the six `analysis` misses, a conclusion sentence with attitude followed the data, and I let that tone decide the label. In the four `hot_take` misses, I let a heated or tired tone stand in for rule 2's test of whether the post is about the writer's experience. I labeled posts 1, 2, 4 and 9 of the staff set `analysis`, and those have the same structure as the six I missed, so I applied one rule two ways. This suggests I may apply written rules inconsistently, but it can’t tell me whether my own skin_help and routine_review labels were inconsistent, because the staff taxonomy uses different labels.
 
 
 ---
@@ -403,46 +411,10 @@ Yes, on accuracy and on two of three labels. Accuracy went from 0.500 / 0.500 / 
 
 **Criterion 3 (`routine_review` F1 ≥ 0.50), still MISSED.** I would add about 30 more `routine_review` posts, labeled with the same care as the first batch, and re-check the rows I relabeled near the `discussion` boundary. I stopped because the brief allows one change and the diagnosis pointed first at undertraining. Validation loss had flattened by epochs 8 to 10, so more epochs are unlikely to fix this label.
 
-**Criterion 5.** It passes only on a revised instrument (staff-set agreement), not on my own `cold` rows. I'd have a second person label those 20 rows with my taxonomy.
+**Criterion 5 (labeling consistency), met only on a revised instrument.** It passes on staff-set agreement (20 of 30), not on my own 20 `cold` rows. I would have a second person label those 20 rows using only my taxonomy. I stopped because this unit supplied no second labeler for my own taxonomy.
 
 **The gap between what I meant my labels to capture and what the model learned:**
 I meant `routine_review` to capture posts centered on the poster's own products or regimen, but the model never predicted it on any seed, and 8 of its 9 test posts were called `discussion`. What it actually learned is a two-way split between `skin_help` and `discussion`, which is the only distinction the confusion matrix shows it making.
-
-
-
-<!-- ═════════════════════════════════════════════════════════════════════
-
-     SUBMISSION CHECKLIST — unit 5
-
-       [ ] criteria.md has five numbered criteria, each naming a NUMBER
-       [ ] Each has a reason underneath tied to your data or taxonomy
-       [ ] labels.csv: at least 150 rows, text/label/note, ONE file not split
-       [ ] No label above 70%
-       [ ] All five unit 5 sections have real content
-       [ ] Label Taxonomy includes the decision rule for your hardest boundary
-       [ ] The Dataset includes three hard cases
-       [ ] results.json and test_split.csv committed (the notebook does this)
-       [ ] At least four new commits
-       [ ] Repository URL submitted — WRITE IT DOWN
-
-     SUBMISSION CHECKLIST — unit 6
-
-       [ ] Baseline vs. Trained table, with your prediction written beforehand
-       [ ] Run Log — Before, five criteria across three seeds
-       [ ] Confusion matrix TYPED AS A MARKDOWN TABLE
-       [ ] A verdict on every criterion
-       [ ] A diagnosis for every miss, using the agreement report as evidence
-       [ ] Agreement Report with every disagreement adjudicated
-       [ ] One improvement, with Run Log — After
-       [ ] What's Still Broken
-       [ ] results_three_seeds_before.json, results_three_seeds_after.json,
-           baseline_results.json and
-           agreement_results.json committed
-       [ ] At least four new commits
-       [ ] The SAME repository URL as last unit
-
-     Do not delete and recreate this repository.
-     ═════════════════════════════════════════════════════════════════════ -->
 
 ---
 
