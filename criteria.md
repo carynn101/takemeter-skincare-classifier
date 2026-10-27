@@ -24,6 +24,10 @@ These targets were set before training, before I saw any results.
 
 **Note added after training:** The counts in criteria 3 and 4 were true when I wrote them. After I reviewed my pre-labeled rows I changed 3 labels, so the final counts in `labels.csv` are 100 `skin_help`, 76 `discussion`, and 22 `routine_review` (50.5% / 38.4% / 11.1%). I did not change any target or reason.
 
+> **Revised in unit 6:** I agree with the staff labels on at least 20 of the 30 staff posts (65%).
+>
+> **Why revised:** The original needs a second person to label my 20 `cold` rows under my own taxonomy, and this unit gave me no such labeler, so I could not produce a verdict from it. The 65% threshold is unchanged. Only the instrument changed. I wrote this revision before seeing the result, but I am recording it after the agreement run, so the timing is not clean.
+
 ---
 
 ## Pick numbers you can defend
