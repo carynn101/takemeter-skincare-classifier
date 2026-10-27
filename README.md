@@ -357,9 +357,9 @@ Eight of ten disagreements are pile (a): the rule covered the case and I applied
 
 ## The Improvement
 
-**What I changed:**
+**What I changed:** Epochs from 3 to 10. Learning rate (2e-5), batch size (16), labels, taxonomy and criteria are unchanged.
 
-**Which diagnosis pointed at it:**
+**Which diagnosis pointed at it:** Seeds 42 and 7 collapsed to predicting `skin_help` for every post. Training loss only fell from about 1.05 to 0.97 over 27 steps, and validation accuracy stayed at 0.500 for all three epochs. That points to undertraining, not mislabeling.
 
 ### Run Log — After
 
