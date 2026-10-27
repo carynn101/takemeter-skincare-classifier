@@ -217,7 +217,7 @@ Accuracy ranged from 0.500 to 0.700 across seeds, a 20-point spread, and discuss
 | 2 | F1 `skin_help` / `discussion` | each ≥ 0.60 | MISSED | `skin_help` passed on all seeds, but `discussion` F1 was 0.000 on seeds 42 and 7. |
 | 3 | F1 `routine_review` | ≥ 0.50 | MISSED | F1 was 0.000 on all three seeds. |
 | 4 | Balance in `labels.csv` | ≤ 60% and ≥ 8% | MET | 50.5% / 38.4% / 11.1%. This measures the data, so it is the same on every seed. |
-| 5 | Labeling consistency | ≥ 13 of 20 | pending | Needs the agreement step. See below. |
+| 5 | Labeling consistency | ≥ 13 of 20 (revised: ≥ 20 of 30 staff posts) | MET | 20 of 30 = 67% against the staff set. The original instrument (a second labeler on my 20 `cold` rows) was never available, so I used the revision recorded in `criteria.md`. |
 
 **Diagnoses**
 
@@ -361,34 +361,52 @@ Eight of ten disagreements are pile (a): the rule covered the case and I applied
 
 **Which diagnosis pointed at it:** Seeds 42 and 7 collapsed to predicting `skin_help` for every post. Training loss only fell from about 1.05 to 0.97 over 27 steps, and validation accuracy stayed at 0.500 for all three epochs. That points to undertraining, not mislabeling.
 
+### Confidence check
+
+Yes, on all three seeds the model's most confident predictions were right more often than its least confident ones (10 posts per third).
+
+| Seed | Accuracy, most confident third | Accuracy, least confident third | Mean confidence when right | Mean confidence when wrong |
+|---|---|---|---|---|
+| 42 | 1.0 | 0.5 | 0.776 | 0.581 |
+| 7 | 1.0 | 0.6 | 0.687 | 0.563 |
+| 2024 | 0.9 | 0.6 | 0.785 | 0.690 |
+
+Before the change, the collapsed seed-42 model scored 0.9 vs. 0.0 on the two thirds, but its mean confidence was nearly flat (0.502 when right, 0.457 when wrong), so that gap came from a model leaning on one label. After training, the gap is smaller but the confidence itself separates right from wrong. Caveat: each third is 10 posts, so one post moves a third by 10 points.
+
 ### Run Log — After
+
+Device: `mps`. Only change: epochs 3 → 10. Same seeds, labels, taxonomy and criteria. The committed notebook holds the after configuration (`EPOCHS = 10`); the before run used `EPOCHS = 3`.
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. Overall accuracy | ≥ 0.65 | 0.800 | 0.733 | 0.767 | MET |
+| 2. F1 `skin_help` / `discussion` | each ≥ 0.60 | 0.875 / 0.800 | 0.828 / 0.714 | 0.857 / 0.759 | MET |
+| 3. F1 `routine_review` | ≥ 0.50 | 0.000 | 0.000 | 0.000 | MISSED |
+| 4. Balance in `labels.csv` | ≤ 60% and ≥ 8% | 50.5 / 38.4 / 11.1% | same | same | MET |
+| 5. Labeling consistency | ≥ 13 of 20 (revised: ≥ 20 of 30 staff posts) | 20 / 30 | n/a | n/a | MET |
+
+Confusion matrix after the change (seed 42):
+
+| true \ predicted | skin_help | routine_review | discussion |
+|---|---|---|---|
+| **skin_help** | 14 | 0 | 1 |
+| **routine_review** | 1 | 0 | 2 |
+| **discussion** | 2 | 0 | 10 |
 
 **Did it help, and how do I know:**
-
-<!-- If it didn't, say so. Relabelling that didn't help is a genuinely
-     interesting result and earns full credit. -->
-
+Yes, on accuracy and on two of three labels. Accuracy went from 0.500 / 0.500 / 0.700 to 0.800 / 0.733 / 0.767, and the spread across seeds fell from 0.200 to 0.067, under the ten-point instability threshold. `discussion` F1 went from 0.000 / 0.000 / 0.667 to 0.800 / 0.714 / 0.759, and `skin_help` F1 from 0.667 / 0.667 / 0.788 to 0.875 / 0.828 / 0.857. Criteria 1 and 2 flipped from MISSED to MET. Criterion 3 did not move: `routine_review` F1 is 0.000 on all three seeds, and the model never predicted that label at all. So the collapse was undertraining for the two larger labels, but not the whole story for `routine_review`. On the seed-42 split the trained model now beats the baseline on accuracy (0.800 vs. 0.700) but still trails it on macro F1 (0.558 vs. 0.690), because the baseline scored 0.800 on `routine_review`. Caveat: each test split has only 30 posts, and `routine_review` has 3.
 
 
 ---
 
 ## What's Still Broken
 
-<!-- For each criterion still missed: what you'd do, and why you stopped. -->
+**Criterion 3 (`routine_review` F1 ≥ 0.50), still MISSED.** I would add about 30 more `routine_review` posts, labeled with the same care as the first batch, and re-check the rows I relabeled near the `discussion` boundary. I stopped because the brief allows one change and the diagnosis pointed first at undertraining. Validation loss had flattened by epochs 8 to 10, so more epochs are unlikely to fix this label.
 
+**Criterion 5.** It passes only on a revised instrument (staff-set agreement), not on my own `cold` rows. I'd have a second person label those 20 rows with my taxonomy.
 
-
-**The gap between what I meant my labels to capture and what the model
-learned:**
-<!-- Two sentences. Your confusion matrix is the evidence. -->
+**The gap between what I meant my labels to capture and what the model learned:**
+I meant `routine_review` to capture posts centered on the poster's own products or regimen, but the model never predicted it on any seed, and 8 of its 9 test posts were called `discussion`. What it actually learned is a two-way split between `skin_help` and `discussion`, which is the only distinction the confusion matrix shows it making.
 
 
 
